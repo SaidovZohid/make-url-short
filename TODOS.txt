@@ -1,0 +1,2 @@
+1. Write a cruds of user and url 
+2. Write a logic of redis caching of url
