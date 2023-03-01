@@ -1,6 +1,10 @@
 package repo
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type UrlStorageI interface {
 	Create(u *Url) (*Url, error)
@@ -12,13 +16,13 @@ type UrlStorageI interface {
 }
 
 type Url struct {
-	Id          int64
-	UserId      int64
-	OriginalUrl string
-	HashedUrl   string
-	MaxClicks   *int64
-	ExpiresAt   *time.Time
-	CreatedAt   time.Time
+	Id          primitive.ObjectID `bson:"_id"`
+	UserId      int64              `bson:"user_id"`
+	OriginalUrl string             `bson:"original_url"`
+	HashedUrl   string             `bson:"hashed_url"`
+	MaxClicks   *int64             `bson:"max_clicks"`
+	ExpiresAt   *time.Time         `bson:"expires_at"`
+	CreatedAt   time.Time          `bson:"created_at"`
 }
 
 type GetAllUrlsResult struct {

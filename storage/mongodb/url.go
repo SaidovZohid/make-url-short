@@ -6,10 +6,10 @@ import (
 )
 
 type urlRepo struct {
-	db *mongo.Database
+	db *mongo.Collection
 }
 
-func NewUrl(db *mongo.Database) repo.UrlStorageI {
+func NewUrl(db *mongo.Collection) repo.UrlStorageI {
 	return &urlRepo{
 		db: db,
 	}

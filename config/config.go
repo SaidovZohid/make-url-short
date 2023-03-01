@@ -16,6 +16,7 @@ type MongoDB struct {
 	Port           string
 	User           string
 	Password       string
+	Database       string
 	UserCollection string
 	UrlCollection  string
 }
@@ -36,6 +37,7 @@ func Load(path string) (*Config, error) {
 			Port:           conf.GetString("MONGODB_PORT"),
 			User:           conf.GetString("MONGODB_USER"),
 			Password:       conf.GetString("MONGODB_PASSWORD"),
+			Database:       conf.GetString("MONGODB_DATABASE"),
 			UserCollection: conf.GetString("MONGODB_COLLECTION_USER"),
 			UrlCollection:  conf.GetString("MONGODB_COLLECTION_URL"),
 		},

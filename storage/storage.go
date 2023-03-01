@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"github.com/SaidovZohid/make-url-short/config"
 	"github.com/SaidovZohid/make-url-short/storage/mongodb"
 	"github.com/SaidovZohid/make-url-short/storage/repo"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,12 +16,15 @@ type Storage struct {
 	urlRepo  repo.UrlStorageI
 }
 
-func NewStorage(cfg *config.Config, db *mongo.Client) StorageI {
-	urlCol := db.Database(cfg.MongoDB.UrlCollection)
-	userCol := db.Database(cfg.MongoDB.UserCollection)
+type Collections struct {
+	UserCollection *mongo.Collection
+	UrlCollection  *mongo.Collection
+}
+
+func NewStorage(c *Collections) StorageI {
 	return &Storage{
-		userRepo: mongodb.NewUser(userCol),
-		urlRepo:  mongodb.NewUrl(urlCol),
+		userRepo: mongodb.NewUser(c.UserCollection),
+		urlRepo:  mongodb.NewUrl(c.UrlCollection),
 	}
 }
 

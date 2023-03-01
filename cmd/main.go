@@ -42,6 +42,12 @@ func main() {
 		panic(err)
 	}
 	log.Info("Pinged the primary node of the cluster. You successfully connected to MongoDB!")
+	db := client.Database(cfg.MongoDB.Database)
+	colUser := db.Collection(cfg.MongoDB.UserCollection)
+	colUrl := db.Collection(cfg.MongoDB.UrlCollection)
+	_ = storage.NewStorage(&storage.Collections{
+		UserCollection: colUser,
+		UrlCollection:  colUrl,
+	})
 
-	_ = storage.NewStorage(cfg, client)
 }
