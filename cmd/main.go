@@ -7,6 +7,7 @@ import (
 	"github.com/SaidovZohid/make-url-short/config"
 	"github.com/SaidovZohid/make-url-short/pkg/logger"
 	"github.com/SaidovZohid/make-url-short/storage"
+	"github.com/SaidovZohid/make-url-short/storage/repo"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -45,9 +46,37 @@ func main() {
 	db := client.Database(cfg.MongoDB.Database)
 	colUser := db.Collection(cfg.MongoDB.UserCollection)
 	colUrl := db.Collection(cfg.MongoDB.UrlCollection)
-	_ = storage.NewStorage(&storage.Collections{
+	strg := storage.NewStorage(&storage.Collections{
 		UserCollection: colUser,
 		UrlCollection:  colUrl,
 	})
+	res, err := strg.User().GetAll(context.Background(), &repo.GetAllUsersParams{
+		Limit: 10,
+		Page:  1,
+		Search: "ai",
+	})
+	if err != nil {
+		log.Println(err)
+	}
+	for _, v := range res.Users {
+		log.Println(v)
+	}
+	// objectId, err := primitive.ObjectIDFromHex("63ff0ebd20379a3c6912f1cc")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// _, err = strg.User().Update(context.Background(), &repo.User{
+	// 	Id:        objectId,
+	// 	FirstName: "Zohid",
+	// 	LastName:  "Saidov",
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// res, err := strg.User().Get(context.Background(), "63ff0ebd20379a3c6912f1cc")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(res)
 
 }

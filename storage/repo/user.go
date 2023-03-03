@@ -1,18 +1,19 @@
 package repo
 
 import (
+	"context"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UserStorageI interface {
-	Create(u *User) (*User, error)
-	Get(id string) (*User, error)
-	GetByEmail(email string) (*User, error)
-	GetAll(params *GetAllUsersParams) (*GetAllUsersResult, error)
-	Update(u *User) (*User, error)
-	Delete(userId int64) error
+	Create(ctx context.Context, u *User) (*User, error)
+	Get(ctx context.Context, id string) (*User, error)
+	GetByEmail(ctx context.Context, email string) (*User, error)
+	GetAll(ctx context.Context, params *GetAllUsersParams) (*GetAllUsersResult, error)
+	Update(ctx context.Context, u *User) (*User, error)
+	Delete(ctx context.Context, userId string) error
 }
 
 type User struct {
